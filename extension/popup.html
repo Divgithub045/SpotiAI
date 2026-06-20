@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>SpotiAI Playlist Creator</title>
+  <link rel="stylesheet" href="popup.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- ================= SCREEN 1: LOGIN ================= -->
+    <div id="screen-login" class="screen active">
+      <div class="brand-header">
+        <span class="brand-logo">✦</span>
+        <h1 class="brand-name">SpotiAI</h1>
+        <p class="brand-tagline">Your AI Playlist Curator</p>
+      </div>
+      <div class="login-visual">
+        <div class="pulse-circle c1"></div>
+        <div class="pulse-circle c2"></div>
+        <div class="pulse-circle c3"></div>
+        <span class="music-icon">🎵</span>
+      </div>
+      <div class="login-footer">
+        <p class="login-desc">Connect your Spotify account to personalize playlist curations based on your real music tastes.</p>
+        <button id="btn-login" class="btn btn-primary btn-full">Connect Spotify</button>
+      </div>
+    </div>
+    
+    <!-- ================= SCREEN 2: MAIN APP ================= -->
+    <div id="screen-main" class="screen">
+      <!-- User profile header -->
+      <header class="app-header">
+        <div class="user-info">
+          <span class="user-avatar">👤</span>
+          <div>
+            <div class="welcome-text">Welcome back,</div>
+            <div id="user-name" class="user-name-text">Music Fan</div>
+          </div>
+        </div>
+        <button id="btn-logout" class="btn-icon" title="Log out">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        </button>
+      </header>
+
+      <!-- Tab Navigation -->
+      <nav class="app-tabs">
+        <button class="tab-btn active" data-tab="tab-prompt">Prompt Mode</button>
+        <button class="tab-btn" data-tab="tab-guided">Guided Mode</button>
+        <button class="tab-btn" data-tab="tab-history">History</button>
+      </nav>
+
+      <!-- Tab Body Container -->
+      <div class="tab-content-container">
+        
+        <!-- Tab: Prompt Mode -->
+        <div id="tab-prompt" class="tab-pane active">
+          <div class="form-group">
+            <label class="form-label">Describe your playlist vibe</label>
+            <textarea id="prompt-text" class="form-input textarea" placeholder="E.g., late-night lo-fi beats for coding, high-energy progressive house for running, or 80s synthwave for late drives..."></textarea>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group half">
+              <label class="form-label">Songs Count</label>
+              <select id="prompt-limit" class="form-input select">
+                <option value="10">10 songs</option>
+                <option value="15">15 songs</option>
+                <option value="20" selected>20 songs</option>
+                <option value="30">30 songs</option>
+              </select>
+            </div>
+            
+            <div class="form-group half">
+              <label class="form-label">Discovery Mode</label>
+              <select id="prompt-discovery" class="form-input select">
+                <option value="popular">Popular Hits</option>
+                <option value="balanced" selected>Balanced Mix</option>
+                <option value="hidden_gems">Hidden Gems</option>
+              </select>
+            </div>
+          </div>
+          
+          <button id="btn-generate-prompt" class="btn btn-primary btn-full mt-auto">Generate Playlist</button>
+        </div>
+
+        <!-- Tab: Guided Mode -->
+        <div id="tab-guided" class="tab-pane">
+          <div class="scroll-form">
+            <div class="form-row">
+              <div class="form-group half">
+                <label class="form-label">Genre</label>
+                <select id="guided-genre" class="form-input select">
+                  <option value="" selected>Any / Mix</option>
+                  <option value="pop">Pop</option>
+                  <option value="rock">Rock</option>
+                  <option value="hip-hop">Hip-Hop</option>
+                  <option value="electronic">Electronic / Dance</option>
+                  <option value="indie">Indie / Alternative</option>
+                  <option value="jazz">Jazz / Blues</option>
+                  <option value="lofi">Lo-Fi / Chill</option>
+                  <option value="rb">R&B / Soul</option>
+                  <option value="classical">Classical</option>
+                </select>
+              </div>
+
+              <div class="form-group half">
+                <label class="form-label">Mood</label>
+                <select id="guided-mood" class="form-input select">
+                  <option value="" selected>Any Mood</option>
+                  <option value="happy">Happy & Uplifting</option>
+                  <option value="chill">Chill & Relaxed</option>
+                  <option value="energetic">Energetic & Hyped</option>
+                  <option value="melancholic">Melancholic & Sad</option>
+                  <option value="dark">Dark & Mysterious</option>
+                  <option value="focus">Deep Focus</option>
+                  <option value="party">Party Vibes</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group half">
+                <label class="form-label">Activity</label>
+                <select id="guided-activity" class="form-input select">
+                  <option value="" selected>Any Activity</option>
+                  <option value="workout">Workout / Running</option>
+                  <option value="study">Study / Coding</option>
+                  <option value="relax">Relaxing / Downtime</option>
+                  <option value="commute">Commuting</option>
+                  <option value="social">Social / Party</option>
+                  <option value="sleep">Sleeping / Wind Down</option>
+                </select>
+              </div>
+
+              <div class="form-group half">
+                <label class="form-label">Energy Level</label>
+                <select id="guided-energy" class="form-input select">
+                  <option value="" selected>Any Energy</option>
+                  <option value="low">Low (Calm)</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High (Intense)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group half">
+                <label class="form-label">Lyrics Language</label>
+                <select id="guided-language" class="form-input select">
+                  <option value="" selected>Any Language</option>
+                  <option value="english">English</option>
+                  <option value="hindi">Hindi / Bollywood</option>
+                  <option value="spanish">Spanish</option>
+                  <option value="french">French</option>
+                  <option value="japanese">Japanese / J-Pop</option>
+                  <option value="korean">Korean / K-Pop</option>
+                  <option value="instrumental">Instrumental Only</option>
+                </select>
+              </div>
+
+              <div class="form-group half">
+                <label class="form-label">Discovery Mode</label>
+                <select id="guided-discovery" class="form-input select">
+                  <option value="popular">Popular Hits</option>
+                  <option value="balanced" selected>Balanced Mix</option>
+                  <option value="hidden_gems">Hidden Gems</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Playlist Length</label>
+              <select id="guided-limit" class="form-input select">
+                <option value="10">10 songs</option>
+                <option value="15">15 songs</option>
+                <option value="20" selected>20 songs</option>
+                <option value="30">30 songs</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Custom Instruction (Optional)</label>
+              <input type="text" id="guided-prompt" class="form-input text-field" placeholder="E.g. only 90s rock, no heavy drums...">
+            </div>
+          </div>
+          
+          <button id="btn-generate-guided" class="btn btn-primary btn-full mt-4">Create Playlist</button>
+        </div>
+
+        <!-- Tab: History -->
+        <div id="tab-history" class="tab-pane">
+          <div id="history-empty" class="empty-state">
+            <span class="empty-icon">💿</span>
+            <p>No playlists created yet. Start generating in Prompt or Guided mode!</p>
+          </div>
+          <div id="history-list" class="history-list-scroll scrollbar-styled">
+            <!-- Dynamic playlist cards will appear here -->
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+    <!-- ================= SCREEN 3: GENERATING / LOADING ================= -->
+    <div id="screen-loading" class="screen">
+      <div class="loader-container">
+        <!-- Equalizer animation -->
+        <div class="equalizer">
+          <div class="eq-bar bar-1"></div>
+          <div class="eq-bar bar-2"></div>
+          <div class="eq-bar bar-3"></div>
+          <div class="eq-bar bar-4"></div>
+          <div class="eq-bar bar-5"></div>
+        </div>
+        <h2 class="loading-title">Curating Vibe</h2>
+        <p id="loading-status" class="loading-status-text">Analyzing your taste profile...</p>
+        
+        <div class="progress-indicator">
+          <div class="progress-bar-fill"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= SCREEN 4: RESULTS ================= -->
+    <div id="screen-result" class="screen">
+      <div class="result-header">
+        <span class="success-badge">✓ Playlist Created</span>
+        <h2 id="result-title" class="playlist-title">Late-Night Coding Vibe</h2>
+        <p id="result-description" class="playlist-description">A curated selection of synth and ambient beats for focus.</p>
+      </div>
+
+      <div class="result-body scrollbar-styled">
+        <div class="explanation-box">
+          <span class="explanation-badge">AI Insight</span>
+          <p id="result-explanation" class="explanation-text">These tracks were selected to give you clean synth loops without distracting lyrics, aligning with your love for electronic music.</p>
+        </div>
+
+        <h3 class="tracklist-header">Track List</h3>
+        <div id="result-tracks" class="track-list">
+          <!-- Dynamic track items go here -->
+        </div>
+      </div>
+
+      <div class="result-footer">
+        <button id="btn-open-spotify" class="btn btn-primary btn-full">Open in Spotify</button>
+        <div class="footer-actions">
+          <button id="btn-regenerate-current" class="btn btn-secondary flex-1">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; vertical-align: middle;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>Refresh Tracks
+          </button>
+          <button id="btn-start-over" class="btn btn-outline">Back</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
