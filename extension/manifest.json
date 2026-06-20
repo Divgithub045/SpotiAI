@@ -8,7 +8,7 @@
     "tabs"
   ],
   "host_permissions": [
-    "http://localhost:8000/*"
+    "https://spotiai.onrender.com/*"
   ],
   "action": {
     "default_popup": "popup.html"
@@ -16,7 +16,7 @@
   "web_accessible_resources": [
     {
       "resources": ["callback.html"],
-      "matches": ["http://127.0.0.1:8000/*", "http://localhost:8000/*"]
+      "matches": ["https://spotiai.onrender.com/*"]
     }
   ]
 }

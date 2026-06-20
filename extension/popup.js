@@ -1,5 +1,5 @@
 // Base URL of the FastAPI backend
-const BACKEND_URL = 'http://localhost:8000';
+const BACKEND_URL = 'https://spotiai.onrender.com';
 
 // Safe chrome environment wrapper polyfills (for running as a standard web tab or loaded extension)
 const safeStorage = {
